@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>续保每日赚钱指引</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            font-size: 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: white;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+        h1 {
+            text-align: center;
+            color: #1a73e8;
+            margin-bottom: 30px;
+            font-size: 32px;
+        }
+        .search-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        #dateSearch {
+            font-size: 20px;
+            padding: 12px 20px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            width: 280px;
+            cursor: pointer;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+        #dateSearch:hover,
+        #dateSearch:focus {
+            border-color: #1a73e8;
+            box-shadow: 0 2px 8px rgba(26, 115, 232, 0.2);
+        }
+        ::-webkit-calendar-picker-indicator {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+        }
+        .guide-card {
+            background-color: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            border: 1px solid #e0e0e0;
+            font-size: 20px;
+            line-height: 1.6;
+        }
+        .guide-card:hover {
+            transform: translateY(-2px);
+        }
+        .date {
+            color: #1a73e8;
+            font-weight: 500;
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        .renewal-period {
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        .investment-rates {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .rate-item {
+            margin: 12px 0;
+            color: #555;
+            line-height: 1.6;
+            font-size: 20px;
+        }
+        .rate-item.no-rate {
+            color: #cf1322;
+            font-weight: 500;
+            background-color: #fff2f0;
+            padding: 12px 15px;
+            border-radius: 6px;
+            margin: 12px 0;
+        }
+        .highlight {
+            color: #d23f31;
+            font-weight: 600;
+        }
+        button {
+            background-color: #1a73e8;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background-color: #1a73e8;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 2px 8px rgba(26,115,232,0.2);
+        }
+        button.active {
+            background-color: #1a73e8;
+            color: white;
+            box-shadow: 0 2px 8px rgba(26,115,232,0.2);
+        }
+        .nav-buttons {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            display: none; /* 默认隐藏周选择 */
+        }
+
+        .show-weeks {
+            display: block;
+            margin: 20px 0;
+            text-align: right;
+        }
+
+        .toggle-weeks {
+            background: none;
+            border: none;
+            color: #666;
+            font-size: 16px;
+            padding: 8px 16px;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        .toggle-weeks:hover {
+            color: #1a73e8;
+        }
+
+        .week-btn {
+            background: white;
+            color: #666;
+            border: 1px solid #e0e0e0;
+            padding: 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .week-btn.active {
+            background: #f0f7ff;
+            color: #1a73e8;
+            border-color: #1a73e8;
+        }
+        .share-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 12px;
+            z-index: 1000;
+        }
+        .share-button {
+            font-size: 18px;
+            padding: 12px 24px;
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 20px;
+            cursor: pointer;
+            color: #666;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .share-button:hover {
+            color: #1a73e8;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .share-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+        }
+        .share-modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            max-width: 90%;
+            max-height: 90%;
+            overflow: auto;
+            position: relative;
+        }
+        .share-modal img {
+            max-width: 100%;
+            height: auto;
+        }
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #666;
+        }
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 18px;
+            display: none;
+            z-index: 1000;
+        }
+        .countdown {
+            background: linear-gradient(135deg, #ff4e50, #f9d423);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            margin: 20px 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .countdown-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: #fff;
+        }
+
+        .countdown-row {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .countdown-text {
+            font-size: 32px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .countdown-number {
+            font-size: 32px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+            line-height: 1.2;
+        }
+        @media print {
+            .no-print {
+                display: none;
+            }
+            .guide-card {
+                break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>续保每日赚钱指引</h1>
+        <div id="countdown-container"></div>
+        <div class="search-container">
+            <input type="date" id="dateSearch">
+            <button onclick="searchDate()">查找日期</button>
+        </div>
+        <div class="show-weeks">
+            <button class="toggle-weeks" onclick="toggleWeeks()">按周查看</button>
+        </div>
+        <div class="nav-buttons no-print">
+            <button onclick="showWeek(1)" class="week-btn">12月3日 - 12月9日</button>
+            <button onclick="showWeek(2)" class="week-btn">12月10日 - 12月16日</button>
+            <button onclick="showWeek(3)" class="week-btn">12月17日 - 12月23日</button>
+            <button onclick="showWeek(4)" class="week-btn">12月24日 - 12月30日</button>
+            <button onclick="showWeek(5)" class="week-btn">12月31日 - 1月6日</button>
+            <button onclick="showWeek(6)" class="week-btn">1月7日 - 1月13日</button>
+            <button onclick="showWeek(7)" class="week-btn">1月14日 - 1月20日</button>
+            <button onclick="showWeek(8)" class="week-btn">1月21日 - 1月27日</button>
+            <button onclick="showWeek(9)" class="week-btn">1月28日 - 1月31日</button>
+        </div>
+        <div id="guides-container"></div>
+    </div>
+
+    <div class="share-container">
+        <button class="share-button" onclick="shareToWeChat()">
+            <i class="fab fa-weixin"></i> 微信
+        </button>
+        <button class="share-button" onclick="shareToQQ()">
+            <i class="fab fa-qq"></i> QQ
+        </button>
+        <button class="share-button" onclick="copyLink()">
+            <i class="fas fa-link"></i> 复制链接
+        </button>
+    </div>
+    
+    <div class="share-modal" id="shareModal">
+        <div class="share-modal-content">
+            <button class="close-modal" onclick="closeShareModal()">×</button>
+            <div id="shareImage"></div>
+            <div style="margin-top: 15px; text-align: center; color: #666;">
+                长按图片保存后即可分享
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function generateDates(startDate, endDate) {
+            const dates = [];
+            let currentDate = new Date(startDate);
+            while (currentDate <= endDate) {
+                dates.push(new Date(currentDate));
+                currentDate.setDate(currentDate.getDate() + 1);
+            }
+            return dates;
+        }
+
+        function formatDate(date, format = 'chinese') {
+            if (format === 'chinese') {
+                return `${date.getMonth() + 1} 月 ${date.getDate()} 日`;
+            }
+            return date.toISOString().split('T')[0];
+        }
+
+        function addDays(date, days) {
+            const result = new Date(date);
+            result.setDate(result.getDate() + days);
+            return result;
+        }
+
+        function generateGuideHTML(date) {
+            const renewalStart = addDays(date, 1);
+            const renewalEnd = addDays(date, 30);
+            
+            let ratesHTML = '';
+            let noticeHTML = '';
+            let countdownHTML = '';
+            
+            // 计算距离12月16日的天数
+            const targetDate = new Date('2024-12-16');
+            const currentDate = new Date(date);
+            const daysUntilChange = Math.ceil((targetDate - currentDate) / (1000 * 60 * 60 * 24));
+            
+            // 从12月9日开始显示倒计时
+            if (date >= new Date('2024-12-09') && date < new Date('2024-12-16')) {
+                const warningText = daysUntilChange <= 3 ? 
+                    '最后机会，把握优惠时段' : 
+                    '请注意：费率即将调整';
+                
+                countdownHTML = `
+                    <div class="countdown">
+                        <div class="countdown-title">费用下降倒数</div>
+                        <div class="countdown-row">
+                            <div class="countdown-number">${daysUntilChange}</div>
+                            <div class="countdown-text">天</div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            if (date >= new Date('2024-12-16')) {
+                // 新规则：三档制
+                const cutoff1 = addDays(date, 20);
+                const cutoff2 = addDays(date, 10);
+                
+                ratesHTML = `
+                    <div class="rate-item">${formatDate(cutoff1)}及之后到期的保单增投 <span class="highlight">+5%</span></div>
+                    <div class="rate-item">${formatDate(cutoff2)}至${formatDate(addDays(cutoff1, -1))}到期的保单增投 <span class="highlight">+3%</span></div>
+                    <div class="rate-item no-rate">${formatDate(addDays(cutoff2, -1))}及之前到期的保单没有增投</div>
+                `;
+            } else {
+                // 旧规则：两档制
+                ratesHTML = `
+                    <div class="rate-item">2025年起保的保单增投 <span class="highlight">+5%</span></div>
+                    <div class="rate-item">2024年起保的保单增投 <span class="highlight">+3%</span></div>
+                `;
+            }
+
+            // 特殊提醒
+            if (date.getTime() === new Date('2024-12-15').getTime()) {
+                noticeHTML = `
+                    <div class="notice">
+                        <div>重要提醒：费率调整</div>
+                        <div>• 明日起，12月16日至12月25日的保单增投从5%降至3%</div>
+                        <div>• 明日起，12月25日之前的保单增投将降至0%</div>
+                    </div>
+                `;
+            }
+
+            return `
+                <div class="guide-card" id="${formatDate(date, 'iso')}">
+                    <div class="date">
+                        ${formatDate(date)}赚钱指引
+                        <a href="#top" class="return-to-top">返回顶部</a>
+                    </div>
+                    <div class="renewal-period">今日可续：${formatDate(renewalStart)}至${formatDate(renewalEnd)}到期的保单</div>
+                    ${countdownHTML}
+                    ${noticeHTML}
+                    <div class="investment-rates">
+                        ${ratesHTML}
+                    </div>
+                </div>
+            `;
+        }
+
+        function generateAllGuides() {
+            const startDate = new Date('2024-12-03');
+            const endDate = new Date('2025-01-31');
+            const dates = generateDates(startDate, endDate);
+            
+            const container = document.getElementById('guides-container');
+            dates.forEach(date => {
+                container.innerHTML += generateGuideHTML(date);
+            });
+        }
+
+        function getCurrentDate() {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0');
+            const day = String(now.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+
+        // 页面加载时设置日期选择器为当前日期并触发change事件
+        window.onload = function() {
+            const dateSearch = document.getElementById('dateSearch');
+            const currentDate = getCurrentDate();
+            dateSearch.value = currentDate;
+            
+            // 手动触发change事件以显示当天的内容
+            const event = new Event('change');
+            dateSearch.dispatchEvent(event);
+
+            // 添加倒计时
+            const countdownContainer = document.getElementById('countdown-container');
+            const countdownElement = updateCountdown();
+            if (countdownElement) {
+                countdownContainer.appendChild(countdownElement);
+            }
+        };
+
+        function toggleWeeks() {
+            const navButtons = document.querySelector('.nav-buttons');
+            if (navButtons.style.display === 'none' || navButtons.style.display === '') {
+                navButtons.style.display = 'block';
+            } else {
+                navButtons.style.display = 'none';
+            }
+        }
+
+        function searchDate() {
+            const date = document.getElementById('dateSearch').value;
+            if (!date) return;
+
+            const allGuides = document.querySelectorAll('.guide-card');
+            allGuides.forEach(guide => {
+                guide.style.display = guide.id === date ? 'block' : 'none';
+            });
+
+            // 移除周按钮的激活状态
+            document.querySelectorAll('.week-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+        }
+
+        function showWeek(weekNum) {
+            const weekDates = getWeekDates(weekNum);
+            const allGuides = document.querySelectorAll('.guide-card');
+            
+            document.querySelectorAll('.week-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            document.querySelector(`button[onclick="showWeek(${weekNum})"]`).classList.add('active');
+            
+            allGuides.forEach(guide => {
+                const guideDate = guide.id;
+                guide.style.display = (guideDate >= weekDates.start && guideDate <= weekDates.end) ? 'block' : 'none';
+            });
+        }
+
+        function getWeekDates(weekNum) {
+            const weekRanges = {
+                1: { start: '2024-12-03', end: '2024-12-09' },
+                2: { start: '2024-12-10', end: '2024-12-16' },
+                3: { start: '2024-12-17', end: '2024-12-23' },
+                4: { start: '2024-12-24', end: '2024-12-30' },
+                5: { start: '2024-12-31', end: '2025-01-06' },
+                6: { start: '2025-01-07', end: '2025-01-13' },
+                7: { start: '2025-01-14', end: '2025-01-20' },
+                8: { start: '2025-01-21', end: '2025-01-27' },
+                9: { start: '2025-01-28', end: '2025-01-31' }
+            };
+            return weekRanges[weekNum];
+        }
+
+        function updateCountdown() {
+            const targetDate = new Date('2023-12-09');
+            const now = new Date();
+            const timeDiff = targetDate - now;
+            const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+            if (daysLeft > 0) {
+                const countdownElement = document.createElement('div');
+                countdownElement.className = 'countdown';
+                
+                countdownElement.innerHTML = `
+                    <div class="countdown-title">费用下降倒数</div>
+                    <div class="countdown-row">
+                        <div class="countdown-number">${daysLeft}</div>
+                        <div class="countdown-text">天</div>
+                    </div>
+                `;
+                
+                return countdownElement;
+            }
+            return null;
+        }
+
+        async function generateShareImage() {
+            // 获取当前显示的指南卡片
+            const visibleGuides = Array.from(document.querySelectorAll('.guide-card')).filter(card => 
+                window.getComputedStyle(card).display !== 'none'
+            );
+
+            if (visibleGuides.length === 0) return null;
+
+            // 创建临时容器
+            const container = document.createElement('div');
+            container.style.padding = '20px';
+            container.style.background = 'white';
+            container.style.width = '375px'; // 移动端宽度
+            
+            // 添加标题
+            const title = document.createElement('h2');
+            title.textContent = '续保每日赚钱指引';
+            title.style.textAlign = 'center';
+            title.style.color = '#1a73e8';
+            title.style.marginBottom = '20px';
+            container.appendChild(title);
+
+            // 克隆可见的指南卡片
+            visibleGuides.forEach(guide => {
+                const clone = guide.cloneNode(true);
+                // 移除分享按钮
+                const shareButtons = clone.querySelectorAll('.share-container');
+                shareButtons.forEach(btn => btn.remove());
+                container.appendChild(clone);
+            });
+
+            // 添加水印
+            const watermark = document.createElement('div');
+            watermark.style.textAlign = 'center';
+            watermark.style.color = '#999';
+            watermark.style.marginTop = '20px';
+            watermark.style.fontSize = '12px';
+            watermark.textContent = '长按保存图片';
+            container.appendChild(watermark);
+
+            document.body.appendChild(container);
+
+            // 生成图片
+            try {
+                const canvas = await html2canvas(container, {
+                    scale: 2,
+                    useCORS: true,
+                    backgroundColor: 'white'
+                });
+                document.body.removeChild(container);
+                return canvas.toDataURL('image/png');
+            } catch (error) {
+                console.error('生成图片失败:', error);
+                document.body.removeChild(container);
+                return null;
+            }
+        }
+
+        async function shareToWeChat() {
+            const imageUrl = await generateShareImage();
+            if (!imageUrl) {
+                showToast('生成图片失败');
+                return;
+            }
+            
+            const modal = document.getElementById('shareModal');
+            const shareImage = document.getElementById('shareImage');
+            shareImage.innerHTML = `<img src="${imageUrl}" alt="分享图片">`;
+            modal.style.display = 'flex';
+        }
+
+        async function shareToQQ() {
+            const imageUrl = await generateShareImage();
+            if (!imageUrl) {
+                showToast('生成图片失败');
+                return;
+            }
+            
+            const modal = document.getElementById('shareModal');
+            const shareImage = document.getElementById('shareImage');
+            shareImage.innerHTML = `<img src="${imageUrl}" alt="分享图片">`;
+            modal.style.display = 'flex';
+        }
+
+        function closeShareModal() {
+            const modal = document.getElementById('shareModal');
+            modal.style.display = 'none';
+        }
+
+        // 点击模态框外部关闭
+        document.getElementById('shareModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeShareModal();
+            }
+        });
+
+        function shareToWeChat() {
+            // 使用微信 SDK 分享，这里简化处理
+            if (typeof WeixinJSBridge !== 'undefined') {
+                WeixinJSBridge.invoke('shareTimeline', {
+                    title: '续保每日赚钱指引',
+                    link: window.location.href,
+                    desc: '重要提醒：费率即将调整，请及时查看'
+                });
+            } else {
+                showToast('请在微信中打开');
+            }
+        }
+
+        function shareToQQ() {
+            const url = encodeURIComponent(window.location.href);
+            const title = encodeURIComponent('续保每日赚钱指引');
+            const summary = encodeURIComponent('重要提醒：费率即将调整，请及时查看');
+            window.open(`http://connect.qq.com/widget/shareqq/index.html?url=${url}&title=${title}&summary=${summary}`);
+        }
+
+        function copyLink() {
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                showToast('链接已复制');
+            });
+        }
+
+        function showToast(message) {
+            const toast = document.createElement('div');
+            toast.className = 'copy-success';
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+                document.body.removeChild(toast);
+            }, 2000);
+        }
+
+        generateAllGuides();
+    </script>
+</body>
+</html>
